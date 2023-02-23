@@ -1,4 +1,4 @@
-import express from 'express';
+import express, {Request, Response} from 'express';
 import bodyParser from 'body-parser';
 import {filterImageFromURL, deleteLocalFiles} from './util/util';
 
@@ -30,6 +30,23 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
   /**************************************************************************** */
 
   //! END @TODO1
+  app.get( "/filteredimage/", async( req: Request, res: Response ) => {
+    let { image_url } = req.query;
+
+    if ( !image_url ) {
+      return res.status(400)
+                .send(`image_url is required`);
+    }
+    let imagePath;
+    try{
+      imagePath = await filterImageFromURL(image_url);
+    } catch(err){
+      console.error(err);
+      return res.status(422).send("Can not download image " + image_url);
+    }
+    //deleteLocalFiles([imagePath]);
+    return res.sendFile(imagePath);
+  } );
   
   // Root Endpoint
   // Displays a simple message to the user
