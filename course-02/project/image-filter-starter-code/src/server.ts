@@ -42,7 +42,7 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
       imagePath = await filterImageFromURL(image_url);
     } catch(err){
       console.error(err);
-      return res.status(422).send("Can not download image " + image_url);
+      return res.status(500).send("Can not download image " + image_url);
     }
     //deleteLocalFiles([imagePath]);
     return res.sendFile(imagePath);
