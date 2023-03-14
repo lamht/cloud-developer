@@ -12,7 +12,7 @@ const logger = createLogger('AttachmentUtils')
 export class AttachmentUtils {
     constructor(
         private readonly bucketName = process.env.ATTACHMENT_S3_BUCKET,
-        private readonly urlExpiration = process.env.SIGNED_URL_EXPIRATION
+        private readonly urlExpiration: number = parseInt(process.env.SIGNED_URL_EXPIRATION)
     ) { }
 
     async getSignedUrl(todoId: string): Promise<string> {
