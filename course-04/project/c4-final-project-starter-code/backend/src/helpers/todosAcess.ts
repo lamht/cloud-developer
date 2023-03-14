@@ -48,7 +48,7 @@ export class TodosAccess {
         return newTodoItem
     }    
 
-    async deleteTodo(todoId: string, userId: string) {
+    async deleteTodo(userId: string, todoId: string) {
         const deleteItem:DeleteItemOutput = await this.docClient
             .delete({
                 TableName: this.todosTable,
@@ -62,7 +62,7 @@ export class TodosAccess {
         logger.info("Deleted todo item", {deletedTodo})    
     }  
     
-    async updateTodo(todoId: string, userId: string, updatedProperties: UpdateTodoRequest) {
+    async updateTodo(userId: string, todoId: string, updatedProperties: UpdateTodoRequest) {
         const updateItem: UpdateItemOutput= await this.docClient
             .update({
                 TableName: this.todosTable,
@@ -88,7 +88,7 @@ export class TodosAccess {
         logger.info("Updated todo item", {updatedTodo} )
     }
 
-    async updateAttachmentUrl(attachmentUrl: string, todoId: string, userId: string) {
+    async updateAttachmentUrl(userId: string, todoId: string, attachmentUrl: string) {
         const updateItem: UpdateItemOutput = await this.docClient
             .update({
                 TableName: this.todosTable,

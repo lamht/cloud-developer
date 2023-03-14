@@ -35,7 +35,7 @@ export async function getTodosForUser(userId: string): Promise<TodoItem[]>{
 
 export async function deleteTodo(userId: string, todoId: string){
     logger.info(`delete todo, userId ${userId}, todoId ${todoId}`);
-    return await todosAccess.deleteTodo(todoId, userId)
+    return await todosAccess.deleteTodo(userId, todoId)
 }
 
 export async function createAttachmentPresignedUrl(userId: string, todoId: string): Promise<string>{
@@ -45,5 +45,5 @@ export async function createAttachmentPresignedUrl(userId: string, todoId: strin
 
 export async function updateTodo(userId: string, todoId: string, updatedTodo: UpdateTodoRequest) {
     logger.info(`update todo, userId ${userId}, todoId ${todoId}, data ${updatedTodo}`);
-    return await todosAccess.updateTodo(todoId, userId, updatedTodo)
+    return await todosAccess.updateTodo(userId,todoId, updatedTodo)
 }
