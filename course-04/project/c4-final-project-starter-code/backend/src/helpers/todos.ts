@@ -44,6 +44,6 @@ export async function createAttachmentPresignedUrl(userId: string, todoId: strin
 }
 
 export async function updateTodo(userId: string, todoId: string, updatedTodo: UpdateTodoRequest) {
-    logger.info(`update todo, userId ${userId}, todoId ${todoId}, data ${updatedTodo}`);
-    return await todosAccess.updateTodo(userId,todoId, updatedTodo)
+    logger.info(`update todo, userId ${userId}, todoId ${todoId}, data ${JSON.stringify(updatedTodo)}`);
+    return await todosAccess.updateTodo(userId, todoId, updatedTodo)
 }

@@ -22,7 +22,7 @@ export const handler = middy(
   
     const userId = getUserId(event)
   
-    await updateTodo(todoId, userId, updatedTodo)
+    await updateTodo(userId, todoId, updatedTodo)
   
     return {
       statusCode: 204,
