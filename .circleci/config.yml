@@ -46,7 +46,7 @@ jobs:
       - setup_remote_docker     
       - build-image:
           image-name: "serverless-frontend"
-          folder-name: "client"
+          folder-name: "course-04/project/c4-final-project-starter-code/client"
 
   
 # Invoke jobs via workflows
