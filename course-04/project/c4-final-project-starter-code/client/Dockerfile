@@ -11,4 +11,5 @@ RUN npm run build
 ## Run 
 FROM nginx:alpine
 #COPY www /usr/share/nginx/html
+COPY nginx/default.conf /etc/nginx/conf.d/default.conf
 COPY --from=build  /usr/src/app/build /usr/share/nginx/html
