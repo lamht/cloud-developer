@@ -7,6 +7,7 @@ plugins:
   - serverless-iam-roles-per-function
   - serverless-plugin-tracing
   - serverless-reqvalidator-plugin
+  - serverless-aws-documentation
 
 provider:
   name: aws
@@ -32,16 +33,6 @@ provider:
     # Enable API Gateway logs
     restApi: true
 
-  iam:
-    role:
-      statements:
-        - Effect: Allow
-          Action:
-            - xray:PutTelemetryRecords
-            - xray:PutTraceSegments
-          Resource: "*"
-
-
 functions:
 
   Auth:
@@ -64,6 +55,7 @@ functions:
         Resource: 'arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODOS_TABLE}/index/${self:provider.environment.TODOS_CREATED_AT_INDEX}'
       - Effect: Allow
         Action:
+          - xray:PutTelemetryRecords
           - xray:PutTraceSegments
         Resource: 
           - '*'
@@ -92,6 +84,7 @@ functions:
           - { "Fn::GetAtt": ["TodosDynamoDBTable", "Arn" ] }
       - Effect: Allow
         Action:
+          - xray:PutTelemetryRecords
           - xray:PutTraceSegments
         Resource: 
           - '*'
@@ -115,6 +108,7 @@ functions:
           - { "Fn::GetAtt": ["TodosDynamoDBTable", "Arn" ] }
       - Effect: Allow
         Action:
+          - xray:PutTelemetryRecords
           - xray:PutTraceSegments
         Resource: 
           - '*'   
@@ -137,6 +131,7 @@ functions:
           - { "Fn::GetAtt": ["TodosDynamoDBTable", "Arn" ] }
       - Effect: Allow
         Action:
+          - xray:PutTelemetryRecords
           - xray:PutTraceSegments
         Resource: 
           - '*'   
@@ -164,6 +159,7 @@ functions:
         Resource: arn:aws:s3:::${self:provider.environment.ATTACHMENT_S3_BUCKET}/*       
       - Effect: Allow
         Action:
+          - xray:PutTelemetryRecords
           - xray:PutTraceSegments
         Resource: 
           - '*' 
