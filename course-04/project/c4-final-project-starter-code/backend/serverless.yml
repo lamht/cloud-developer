@@ -7,6 +7,7 @@ plugins:
   - serverless-iam-roles-per-function
   - serverless-plugin-tracing
   - serverless-reqvalidator-plugin
+  - serverless-aws-documentation
 
 provider:
   name: aws
@@ -32,15 +33,20 @@ provider:
     # Enable API Gateway logs
     restApi: true
 
-  iam:
-    role:
-      statements:
-        - Effect: Allow
-          Action:
-            - xray:PutTelemetryRecords
-            - xray:PutTraceSegments
-          Resource: "*"
-
+  custom:
+    documentation:
+      info:
+        version: "2" # see note above about this being ignored
+        title: "Udacity project 4 API" # see note above about this being ignored
+        description: "This is the API for Todo app"
+        termsOfService: "http://thanhlam.com/terms-of-service"
+        contact:
+          name: "Lam Huynh"
+          url: "http://thanhlam.com/me"
+          email: "thanhlam@gmail.com"
+        license:
+          name: "Licensing"
+          url: "http://thanhlam.com/licensing"
 
 functions:
 
@@ -64,6 +70,7 @@ functions:
         Resource: 'arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODOS_TABLE}/index/${self:provider.environment.TODOS_CREATED_AT_INDEX}'
       - Effect: Allow
         Action:
+          - xray:PutTelemetryRecords
           - xray:PutTraceSegments
         Resource: 
           - '*'
@@ -92,6 +99,7 @@ functions:
           - { "Fn::GetAtt": ["TodosDynamoDBTable", "Arn" ] }
       - Effect: Allow
         Action:
+          - xray:PutTelemetryRecords
           - xray:PutTraceSegments
         Resource: 
           - '*'
@@ -107,6 +115,9 @@ functions:
           cors: true
           authorizer: Auth
           reqValidatorName: RequestBodyValidator
+          request:
+            schemas:
+              application/json: ${file(models/update-todo-model.json)}
     iamRoleStatements:
       - Effect: Allow
         Action:  
@@ -115,6 +126,7 @@ functions:
           - { "Fn::GetAtt": ["TodosDynamoDBTable", "Arn" ] }
       - Effect: Allow
         Action:
+          - xray:PutTelemetryRecords
           - xray:PutTraceSegments
         Resource: 
           - '*'   
@@ -137,6 +149,7 @@ functions:
           - { "Fn::GetAtt": ["TodosDynamoDBTable", "Arn" ] }
       - Effect: Allow
         Action:
+          - xray:PutTelemetryRecords
           - xray:PutTraceSegments
         Resource: 
           - '*'   
@@ -164,6 +177,7 @@ functions:
         Resource: arn:aws:s3:::${self:provider.environment.ATTACHMENT_S3_BUCKET}/*       
       - Effect: Allow
         Action:
+          - xray:PutTelemetryRecords
           - xray:PutTraceSegments
         Resource: 
           - '*' 
