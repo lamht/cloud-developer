@@ -59,12 +59,12 @@ jobs:
       - checkout
       - aws-cli/setup
       - serverless/setup
-      - run: cd course-04/project/c4-final-project-starter-code/backend
+      - run: cd course-04/project/c4-final-project-starter-code/backend && ls -la
       - node/install:
-          install-npm: true
+          npm_install: true
           node-version: '14'
       - run: node --version
-      - run: cd course-04/project/c4-final-project-starter-code/backend && ls -la && sls deploy
+      - run: sls deploy
 
 
   
