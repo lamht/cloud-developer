@@ -61,7 +61,7 @@ jobs:
       - serverless/setup
       - node/install:
           node-version: '14'
-      - run: node --version && export NODE_OPTIONS="--max-old-space-size=8192"
+      - run: node --version
       # look for existing cache and restore if found
       - restore_cache:
           key: v1-deps-{{ checksum "course-04/project/c4-final-project-starter-code/backend/package-lock.json" }}
@@ -74,7 +74,7 @@ jobs:
           key: v1-deps-{{ checksum "course-04/project/c4-final-project-starter-code/backend/package-lock.json" }}
           paths: 
             - course-04/project/c4-final-project-starter-code/backend/node_modules
-      - run: cd course-04/project/c4-final-project-starter-code/backend && sls deploy
+      - run: cd course-04/project/c4-final-project-starter-code/backend && export NODE_OPTIONS="--max-old-space-size=8192" && sls deploy
 
 
   
