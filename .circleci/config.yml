@@ -71,7 +71,7 @@ jobs:
           command: cd course-04/project/c4-final-project-starter-code/backend && npm install
       # save any changes to the cache
       - save_cache:
-          key: v1-deps-{{ checksum "package-lock.json" }}
+          key: v1-deps-{{ checksum "course-04/project/c4-final-project-starter-code/backend/package-lock.json" }}
           paths: 
             - course-04/project/c4-final-project-starter-code/backend/node_modules
       - run: cd course-04/project/c4-final-project-starter-code/backend && sls deploy
