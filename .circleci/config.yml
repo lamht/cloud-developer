@@ -62,7 +62,20 @@ jobs:
       - node/install:
           node-version: '14'
       - run: node --version && export NODE_OPTIONS="--max-old-space-size=8192"
-      - run: cd course-04/project/c4-final-project-starter-code/backend && ls -la && npm i && sls deploy
+      - run: cd course-04/project/c4-final-project-starter-code/backend && ls -la
+      # look for existing cache and restore if found
+      - restore_cache:
+          key: v1-deps-{{ checksum "package-lock.json" }}
+      # install dependencies    
+      - run:
+          name: install dependencies
+          command: npm install
+      # save any changes to the cache
+      - save_cache:
+          key: v1-deps-{{ checksum "package-lock.json" }}
+          paths: 
+            - node_modules
+      - run: sls deploy
 
 
   
