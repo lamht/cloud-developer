@@ -58,7 +58,7 @@ jobs:
       - checkout
       - aws-cli/setup
       - serverless/setup
-      - run: cd course-04/project/c4-final-project-starter-code/backend && ls -la && sls deploy
+      - run: cd course-04/project/c4-final-project-starter-code/backend && ls -la && && npm ci && sls deploy
 
 
   
