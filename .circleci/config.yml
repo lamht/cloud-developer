@@ -5,6 +5,7 @@ version: 2.1
 orbs:
    aws-cli: circleci/aws-cli@3.1.4
    serverless: circleci/serverless-framework@2.0.1
+   node: circleci/node@5.0.2
 
 commands: # a reusable command with parameters
   build-image:
@@ -58,7 +59,12 @@ jobs:
       - checkout
       - aws-cli/setup
       - serverless/setup
-      - run: cd course-04/project/c4-final-project-starter-code/backend && ls -la && npm ci && sls deploy
+      - run: cd course-04/project/c4-final-project-starter-code/backend
+      - node/install:
+          install-npm: true
+          node-version: '14'
+      - run: node --version
+      - run: cd course-04/project/c4-final-project-starter-code/backend && ls -la && sls deploy
 
 
   
