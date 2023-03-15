@@ -40,7 +40,10 @@ export async function deleteTodo(userId: string, todoId: string){
 
 export async function createAttachmentPresignedUrl(userId: string, todoId: string): Promise<string>{
     logger.info(`create Presigned Url, userId ${userId}, todoId ${todoId}`);
-    return await attachmentUtils.getSignedUrl(todoId);
+    const resignedUrl =  await attachmentUtils.getSignedUrl(todoId);
+    const s3Link = resignedUrl.split("?")[0];
+    await todosAccess.updateAttachmentUrl(userId, todoId, s3Link);
+    return resignedUrl;
 }
 
 export async function updateTodo(userId: string, todoId: string, updatedTodo: UpdateTodoRequest) {
