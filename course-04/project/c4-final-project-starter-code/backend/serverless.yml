@@ -6,8 +6,32 @@ plugins:
   - serverless-webpack
   - serverless-iam-roles-per-function
   - serverless-plugin-tracing
-  - serverless-reqvalidator-plugin
   - serverless-aws-documentation
+  - serverless-reqvalidator-plugin
+
+custom:
+  documentation:
+    info:
+      version: "2" # see note above about this being ignored
+      title: "Udacity project 4 API" # see note above about this being ignored
+      description: "This is the API for Todo app"
+      termsOfService: "http://thanhlam.com/terms-of-service"
+      contact:
+        name: "Lam Huynh"
+        url: "http://thanhlam.com/me"
+        email: "thanhlam@gmail.com"
+      license:
+        name: "Licensing"
+        url: "http://thanhlam.com/licensing"
+      models:
+      - name: "CreateTodoRequest"
+        description: "Model for creating todo"
+        contentType: "application/json"
+        schema: ${file(models/create-todo-model.json)}
+      - name: "UpdateTodoRequest"
+        description: "Model for updating todo"
+        contentType: "application/json"
+        schema: ${file(models/update-todo-model.json)}
 
 provider:
   name: aws
@@ -32,22 +56,7 @@ provider:
 
   logs:
     # Enable API Gateway logs
-    restApi: true
-
-  custom:
-    documentation:
-      info:
-        version: "2" # see note above about this being ignored
-        title: "Udacity project 4 API" # see note above about this being ignored
-        description: "This is the API for Todo app"
-        termsOfService: "http://thanhlam.com/terms-of-service"
-        contact:
-          name: "Lam Huynh"
-          url: "http://thanhlam.com/me"
-          email: "thanhlam@gmail.com"
-        license:
-          name: "Licensing"
-          url: "http://thanhlam.com/licensing"
+    restApi: true  
 
 functions:
 
@@ -89,9 +98,8 @@ functions:
           cors: true
           authorizer: Auth
           reqValidatorName: RequestBodyValidator
-          request:
-            schemas:
-              application/json: ${file(models/create-todo-model.json)}
+          requestModels:
+            "application/json": "CreateTodoRequest"
     iamRoleStatements:
       - Effect: Allow
         Action:  
@@ -116,9 +124,8 @@ functions:
           cors: true
           authorizer: Auth
           reqValidatorName: RequestBodyValidator
-          request:
-            schemas:
-              application/json: ${file(models/update-todo-model.json)}
+          requestModels:
+            "application/json": "UpdateTodoRequest"
     iamRoleStatements:
       - Effect: Allow
         Action:  
